@@ -1,0 +1,33 @@
+{
+  "name": "web3-check",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js",
+    "build": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@sendgrid/mail": "^7.7.0",
+    "cors": "^2.8.5",
+    "crypto": "^1.0.1",
+    "crypto-js": "^4.1.1",
+    "emailjs": "^4.0.1",
+    "express": "^4.18.2",
+    "express-fileupload": "^1.4.0",
+    "googleapis": "^109.0.1",
+    "html-pdf-node": "^1.0.8",
+    "mongodb": "^4.12.1",
+    "mongoose": "^6.7.5",
+    "nodemailer": "^6.8.0",
+    "nodemon": "^2.0.20",
+    "pdf-parse": "^1.1.1",
+    "serve-favicon": "^2.5.0",
+    "truffle-contract": "^4.0.31",
+    "web3": "^1.8.1"
+  }
+}
