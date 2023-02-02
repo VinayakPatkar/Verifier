@@ -35,11 +35,10 @@ function routes(app,dbe,lms,accounts){
         db.findOne({Rollno},async (err,student)=>{
             if(student){
                 console.log('Already Present');
-                res.status(401).send('Already there');
+                res.status(401).sendFile(path.join(__dirname,'public','error.html'))
             }else{   
                 let dataBase = false, blockchain = false, emailSent = false;
                 console.log('Not there');
-                const Rollnostr = Rollno.toString();
                 let ContentToHash = Rollno.toString()+Mark1.toString()+Mark2.toString()+Mark3.toString()+Mark4.toString()+Mark5.toString();
                 console.log(ContentToHash);
                 ContentAfterHash = crypto.createHash('md5').update(ContentToHash).digest('hex');
@@ -71,69 +70,46 @@ function routes(app,dbe,lms,accounts){
                 <strong> Mark5 : ${Mark5} </strong> <br>`;
 
                 const nodemailer = require('nodemailer');
-                const {google} = require('googleapis');
-                const CLIENT_ID = '787846123554-hdadcrlmr8prolpfrqn9gjvob2k0nshd.apps.googleusercontent.com';
-                const CLIENT_SECRET = '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';
-                const REDIRECT_URL = 'https://developers.google.com/oauthplayground';
-                const REFRESH_TOKEN = '1//04TUUFGT9v3FCCgYIARAAGAQSNwF-L9IrVQLT95pER4Iy7KxwEUs3oYHq3q1fCetcMa7cXz2VqyB3-9D0DIfz1X-7kaM3IHNAdnw';
-                const oAuth2Client = new google.auth.OAuth2(CLIENT_ID,CLIENT_SECRET,REDIRECT_URL);
-                oAuth2Client.setCredentials({refresh_token:REFRESH_TOKEN});
-                async function sendMail()
-                {
-                    try
-                    {
-                        const accessToken = await oAuth2Client.getAccessToken();
-                        const transport = nodemailer.createTransport({
-                            service:'gmail',
-                            auth:{
-                                type:'OAuth2',
-                                user:'verifiertheoriginal@gmail.com',
-                                clientId:CLIENT_ID,
-                                clientSecret:CLIENT_SECRET,
-                                refreshToken:REFRESH_TOKEN,
-                                accessToken:'ya29.a0AX9GBdXonICZh6bU1RFIGX0nkh40Xcn2QAgNMvCGcu73kgGcLoedKKKvFluoxdv3g6VI5In6UQ3b8UcjNmSg9y9WAfADLmvIxUKDaEP92uLY5Wfu_CewjtjoB_txhpvcqvO0P16U8tw1CwJdkxVISra0NThrMqsaCgYKAcwSAQASFQHUCsbCJ1Del2KRDY7dUemYhcUIJQ0166'
-                            }
-                        })
-                        let file = { content: HTMLContent };
-                        let options = { format: "A4" };
-                        const pdfBuffer = await html_to_pdf.generatePdf(file, options);
-                        if(pdfBuffer){
-                            console.log('pdfbuffer constructed');
-                        }else{
-                            console.log('Could not construct pdfBuffer')
-                        }
-                        const mailOptions = {
-                            from : 'verifiertheoriginal@gmail.com',
-                            to : Email,
-                            subject : "Marksheet 2022-23",
-                            attachments: [{
-
-                                filename: `Marksheet.pdf`,
-                                content: pdfBuffer
-                            
-                            }],
-                            html:  HTMLContent,
-                        }
-                        const result = await transport.sendMail(mailOptions);
-                        return result;
-                    }catch(error){
-                        return error
+                var transporter = nodemailer.createTransport({
+                    service: 'outlook',
+                    auth: {
+                      user: 'verifiertheoriginal@outlook.com',
+                      pass: 'Verifier$321'
                     }
-                
-                }
-                await sendMail().then(result=>{
-                    console.log('Email sent');
-                    console.log(result)
-                    if(result.code != 400){
-                        emailSent = true
-                    }
-                })
-                .catch(error=>console.log(error.message));
-                if(emailSent && blockchain && dataBase){
-                    res.status(200).send('The certificate is stored in blockchain,db and the mail is sent')
+                  });
+                let file = { content: HTMLContent };
+                let options = { format: "A4" };
+                const pdfBuffer = await html_to_pdf.generatePdf(file, options);
+                if(pdfBuffer){
+                    console.log('pdfbuffer constructed');
                 }else{
-                    res.status(400).send('Error!')
+                    console.log('Could not construct pdfBuffer')
                 }
+                var mailOptions = {
+                    from: 'verifiertheoriginal@outlook.com',
+                    to: Email,
+                    subject: 'Sending Email using Node.js',
+                    text: 'That was easy!',
+                    attachments: [{
+                        filename: `Marksheet.pdf`,
+                        content: pdfBuffer            
+                    }],
+                    html:  HTMLContent,
+                  };
+                  
+                await transporter.sendMail(mailOptions, function(error, info){
+                    if (error) {
+                      console.log(error);
+                      res.status(400).sendFile(path.join(__dirname,'public','error.html'))
+                    } else {
+                      console.log('Email sent: ' + info.response);
+                      emailSent = true
+                      if(emailSent && blockchain && dataBase){
+                        res.status(200).sendFile(path.join(__dirname,'public','success.html'))
+                        }
+                    }
+                  });
+
                 
             }
         })
