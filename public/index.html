@@ -5,6 +5,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="./style/style.css"  rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <title>Verifier</title>
 </head>
@@ -13,33 +16,88 @@
         <a class="navbar-brand" href="#">
             <img src="images/logo.png" width="100" height="auto" alt="">
           </a>
-        <div class="collapse navbar-collapse" id="navbarText">
+        <div class="collapse navbar-collapse nav-inner" id="navbarText">
           <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-              <a class="nav-link navItem" href="#">About project</span></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link navItem" href="#">About Us</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link navItem" href="#">Contact Us</a>
-            </li>
           </ul>
           <span class="navbar-text">
-            <button class="btn btn-warning navButton"> Get Started</button>
+            <ul class="navbar-nav mr-auto">
+              <li class="nav-item">
+                <a class="nav-link navItem" href="#features">Features</a>
+              </li>
+              <li class="nav-item active">
+                <a class="nav-link navItem" href="#mission">Our mission</span></a>
+              </li>
+  
+              <!-- <li class="nav-item">
+                  <a class="nav-link navItem" href="#footer">Contact Us</a>
+              </li> -->
+            </ul>
           </span>
         </div>
       </nav>
       <div class="mainDiv">
-        <div class="mainText">
-            Verify your marksheets easily<br>
-            <a href="/login"><image src="/images/generate.png" width="20" height="25"></image>  Generate Marksheet</a>
-            <a href="/verify"><image src="/images/verify.png"width="20" height="25"></image>  Verify Marksheet</a>
+        <div id='mainPage' class="mainText">
+            Verify your <br/>marksheets easily<br>
+            <div class="mainDivBtn">
+              <a href="/login" id="inner1"><image src="/images/generate.png" width="20" height="25"></image>  Generate Marksheet</a>
+              <a href="/verify" id="inner2"><image src="/images/verify.png"width="20" height="25"></image>  Verify Marksheet</a>
+            </div>
+
         </div>
-        <div class="mainImg">
-            <image src="/images/website.png"></image>
-        </div>
+        
       </div>
+      <div id="features" class="primary-content features">
+        <h3>Features</h3>
+        <div class="featureDiv">
+        
+                <div class="feature">
+                  <img src="/images/fast.png" width="300px" height="250px">
+                    <h4>Fast and Efficient Verification </h4>
+                    <p> The system would allow educational institutions and students to quickly and easily verify marksheet data, reducing the time and effort required for traditional verification methods.</p>
+                </div>
+                <div class="feature">
+                    <img src="/images/record.png" width="300px" height="250px">
+                    <h4>Transparent Record Keeping</h4>
+                    <p>The blockchain would provide a transparent record of all marksheet data, making it easier to track changes and ensure the accuracy of the information.</p>
+                </div>
+                <div class="feature">
+                  <img src="/images/immutable.png" width="300px" height="250px">
+                    <h4>Immutable Records</h4>
+                    <p>Once marksheet data is recorded on the blockchain, it cannot be altered or deleted, providing a permanent and tamper-proof record of educational achievements.</p>
+                </div>
+                <!-- <div class="feature">
+                  <h4>Secure Storage </h4>
+                  <p> All marksheet data would be securely stored on a decentralized blockchain, ensuring that the information is tamper-proof and protected from unauthorized access.</p>
+                </div> -->
+                <!-- <div class="clear"></div> -->
+            <!-- </ul> -->
+        </div>
+
+      </div>  
+      <div class="primary-content mission" id="mission">
+        <div >
+            <!-- <article> -->
+                <h3>Our mission</h3>
+                <p>Our mission is to provide a secure and reliable platform for verification of academic records. Our project uses the power of blockchain technology to ensure that the marksheet records are tamper-proof and can be easily accessed by authorized parties. Our goal is to improve the efficiency of the verification process and make it more accessible to students and educational institutions. With our platform, you can have peace of mind knowing that your academic records are safe and easily verifiable.</p>
+                
+            <!-- </article> -->
+        </div>
+    </div>
+      <!-- <div id="aboutUs" class="secondary-content about-us">
+        <div class="featureDiv">
+            <article>
+                <h3>About us</h3>
+                <p> </p>
+            </article>
+        </div>
+    </div>
+       -->
+     <footer id="footer" class="footer">
+        <div>
+          Made by: <a href="https://github.com/karishmarajput">Karishma Rajput</a>, Vasundhara, Pratik & Aditya.
+        </div>
+    </footer> 
+    
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>

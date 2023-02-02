@@ -30,6 +30,9 @@ function routes(app,dbe,lms,accounts){
     {
         const {fname,lname,Rollno,Email,Mark1,Mark2,Mark3,Mark4,Mark5} = req.body;
         console.log(fname+lname)
+        if(fname==""||lname==""||Rollno==""||Email==""||Mark1==""||Mark2==""||Mark3==""||Mark4==""||Mark5==""){
+            res.send('Invalid Input! Enter data.')
+        }
         let name = fname + " "+ lname
         console.log(name,Rollno,Email,Mark1,Mark2,Mark3,Mark4,Mark5)
         db.findOne({Rollno},async (err,student)=>{
@@ -60,15 +63,18 @@ function routes(app,dbe,lms,accounts){
                 }
 
                 let HTMLContent = `
-                <h1> Marksheet 2022-23</h1><br>
+                <h1> Marksheet 2022-23</h1><br><hr>
                 <strong> Name : ${name}</strong><br>
                 <strong> Rollno : ${Rollno}</strong><br>
-                <strong> Mark1 : ${Mark1} </strong> <br>
-                <strong> Mark2 : ${Mark2} </strong> <br>
-                <strong> Mark3 : ${Mark3} </strong> <br>
-                <strong> Mark4 : ${Mark4} </strong> <br>
-                <strong> Mark5 : ${Mark5} </strong> <br>`;
-
+                <strong> SPCC : ${Mark1} </strong> <br>
+                <strong> CSS : ${Mark2} </strong> <br>
+                <strong> AI : ${Mark3} </strong> <br>
+                <strong> MC : ${Mark4} </strong> <br>
+                <strong> QA : ${Mark5} </strong> <br>`;
+                let message = `Hello ${name},<br>
+                This is your marksheet of semester-6 Computer Science, Mumbai University.<br>
+                It is generated using Verifier. You can check your marksheet's credibility using verifier.<br>
+                Have a good day,<br> Thank you.`
                 const nodemailer = require('nodemailer');
                 var transporter = nodemailer.createTransport({
                     service: 'outlook',
@@ -88,13 +94,13 @@ function routes(app,dbe,lms,accounts){
                 var mailOptions = {
                     from: 'verifiertheoriginal@outlook.com',
                     to: Email,
-                    subject: 'Sending Email using Node.js',
-                    text: 'That was easy!',
+                    subject: 'Sem 6 Marksheet',
+                    // text: 'That was easy!',
                     attachments: [{
                         filename: `Marksheet.pdf`,
                         content: pdfBuffer            
                     }],
-                    html:  HTMLContent,
+                    html:  message,
                   };
                   
                 await transporter.sendMail(mailOptions, function(error, info){

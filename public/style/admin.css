@@ -1,6 +1,14 @@
 *{
-    background-color: #F2F2F2;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    /* background-color: #F2F2F2; */
+    font-family: 'Montserrat', sans-serif;
+    
+}
+.navbar{
+    
+}
+
+body{
+    background-image: url('/images/admin.jpg');
 }
 .navItem{
     color: black;
