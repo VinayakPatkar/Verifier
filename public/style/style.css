@@ -8,10 +8,12 @@ img{
 body {
     background-color: #f2f2f2;
 }
-nav,
-nav div,
-nav div ul a{
-    background-color: #497174;
+.navbar{
+    /* position: fixed !important;
+    top: 0 !important; */
+    width: 100% !important;
+    padding: 0;
+    margin: 0px;
 }
 
 .navItem{
@@ -23,6 +25,15 @@ nav div ul a{
     text-decoration: none;
     font-weight: 600;
 
+}
+.navbar{
+    /* From https://css.glass */
+background: rgba(255, 255, 255, 0.2);
+
+box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+backdrop-filter: blur(5px);
+-webkit-backdrop-filter: blur(5px);
+border: 1px solid rgba(255, 255, 255, 0.3);
 }
 .navbar-text{
     background-color: inherit;
@@ -36,27 +47,42 @@ nav div ul a{
 .mainDiv{
     width: 100%;
     height: 100vh;
-    padding: 2rem;
-    background-image: url('/images/home.jpg');
+    /* padding: 2rem; */
+    background-image: url('/images/bg.jpg');
+    background-size: cover;
 }
 .mainText{
     /* margin: 5rem 3rem; */
     width: 95%;
+    
     font-size: 5rem;
-    font-weight: 300;
+    font-weight: 400;
     line-height: 5.5rem;
     font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
     text-align: center;
     background: transparent;
+    padding-top: 8.5rem;
+    color: white;
   
+}
+.mainDivBtn{
+    margin-top: 2rem;
 }
 
 .mainText a{
     font-size: 1rem;
-    background-color: #497174;
+    /* background-color: #497174; */
     color: white;
     padding: .75rem;
+    font-weight: bold;
     border-radius: 0.5rem;
+    /* From https://css.glass */
+background: rgba(255, 255, 255, 0.2);
+border-radius: 16px;
+box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+backdrop-filter: blur(5px);
+-webkit-backdrop-filter: blur(5px);
+border: 1px solid rgba(255, 255, 255, 0.3);
 }
 .mainText img{
     background-color: #1A1300 !important;  
@@ -114,7 +140,9 @@ nav div ul a{
 .primary-content a img {
     margin: 20px 0;
 }
-
+.featureText{
+    margin: 0 auto 0px auto;
+}
 .secondary-content {
     background-color: #f2f2f2;
     padding: 60px 0;
@@ -146,7 +174,7 @@ nav div ul a{
     align-items: center;
 }
 .mission{
-    padding: 5rem;
+    padding: 0rem 4rem;
     align-items: center;
     min-height: 70vh ;
 }
@@ -162,13 +190,23 @@ nav div ul a{
 .footer div a:hover{
     font-weight: bolder;
 }
-/* .mainDivBtn{
+.mission{
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
 }
-.mainDivBtn a{
-    margin: 2rem;
-} */
+.mission div{
+    width: 50%;
+    min-height: 100vh;
+    align-items: center;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    padding: 1rem;
+}
+.missionText{
+    /* display: flex; */
+    flex-direction: column;
+}
 @media only screen and (max-width: 800px){
     .featureDiv{
         flex-direction: column;
@@ -197,6 +235,10 @@ nav div ul a{
     }
     .mission{
         padding: 2rem;
+        flex-direction: column;
+    }
+    .mission div{
+        width: 100%;
     }
     .primary-content h3{
         width: 100%;

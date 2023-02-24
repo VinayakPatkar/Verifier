@@ -2,6 +2,10 @@ const path = require('path')
 const mongoose = require('mongoose')
 const html_to_pdf = require('html-pdf-node');
 const crypto = require('crypto')
+const fs = require("fs");
+const { parse } = require("csv-parse");
+
+
 function routes(app,dbe,lms,accounts){
     let db = dbe.collection('StudentData');
     app.get('/',(req,res)=>{
@@ -14,7 +18,9 @@ function routes(app,dbe,lms,accounts){
     app.get('/verify',(req,res)=>{
         res.status(200).sendFile(path.join(__dirname,'public','verify.html'))
     })
-
+    app.get('/generate',(req,res)=>{
+        res.status(200).sendFile(path.join(__dirname,'public','generate.html'))
+    })
     app.post("/login",(req,res)=>{
         const {username,password} = req.body
         UserAdminHardCoded = 'Admin';
@@ -25,7 +31,123 @@ function routes(app,dbe,lms,accounts){
             res.status(401).send('Admin not approved')
         }
     })
+    function generateAMarksheet(fname,lname,Rollno,semester,Email,Mark1,Mark2,Mark3,Mark4,Mark5){
+        if(fname==""||lname==""||Rollno==""||Email==""||Mark1==""||Mark2==""||Mark3==""||Mark4==""||Mark5==""||semester==""){
+            res.send('Invalid Input! Enter data.')
+        }
+        let name = fname + " "+ lname
+        console.log(name,Rollno,Email,Mark1,Mark2,Mark3,Mark4,Mark5)
+        db.findOne({Rollno},async (err,student)=>{
+            if(student){
+                console.log('Already Present');
+                res.status(401).sendFile(path.join(__dirname,'public','error.html'))
+            }else{   
+                let dataBase = false, blockchain = false, emailSent = false;
+                console.log('Not there');
+                let ContentToHash = Rollno.toString()+Mark1.toString()+Mark2.toString()+Mark3.toString()+Mark4.toString()+Mark5.toString();
+                console.log(ContentToHash);
+                ContentAfterHash = crypto.createHash('md5').update(ContentToHash).digest('hex');
+                console.log(ContentAfterHash);
+                const proc = await db.insertOne({name,Rollno,Email,Mark1,Mark2,Mark3,Mark4,Mark5})
+                if(proc){
+                    console.log('Stored in DB');
+                    dataBase = true
+                }else{
+                    console.log('Some error occured');
+                }
 
+                const BlockChainSave = await lms.GenerateCertificate(Rollno,ContentAfterHash,{from:accounts[0]})
+                if(BlockChainSave){
+                    console.log('Stored in BlockChain')
+                    blockchain = true
+                }else{
+                    console.log('Some error occured to store the value in Blockchain')
+                }
+
+                let HTMLContent = `
+                <h1> Marksheet 2022-23</h1><br><hr>
+                <strong> Name : ${name}</strong><br>
+                <strong> Rollno : ${Rollno}</strong><br>
+                <strong> SPCC : ${Mark1} </strong> <br>
+                <strong> CSS : ${Mark2} </strong> <br>
+                <strong> AI : ${Mark3} </strong> <br>
+                <strong> MC : ${Mark4} </strong> <br>
+                <strong> QA : ${Mark5} </strong> <br>`;
+                let message = `Hello ${name},<br>
+                This is your marksheet of semester-6 Computer Science, Mumbai University.<br>
+                It is generated using Verifier. You can check your marksheet's credibility using verifier.<br>
+                Have a good day,<br> Thank you.`
+                const nodemailer = require('nodemailer');
+                var transporter = nodemailer.createTransport({
+                    service: 'outlook',
+                    auth: {
+                      user: 'verifiertheoriginal@outlook.com',
+                      pass: 'Verifier$321'
+                    }
+                  });
+                let file = { content: HTMLContent };
+                let options = { format: "A4" };
+                const pdfBuffer = await html_to_pdf.generatePdf(file, options);
+                if(pdfBuffer){
+                    console.log('pdfbuffer constructed');
+                }else{
+                    console.log('Could not construct pdfBuffer')
+                }
+                var mailOptions = {
+                    from: 'verifiertheoriginal@outlook.com',
+                    to: Email,
+                    subject: 'Sem 6 Marksheet',
+                    // text: 'That was easy!',
+                    attachments: [{
+                        filename: `Marksheet.pdf`,
+                        content: pdfBuffer            
+                    }],
+                    html:  message,
+                  };
+                  
+                await transporter.sendMail(mailOptions, function(error, info){
+                    if (error) {
+                      console.log(error);
+                      res.status(400).sendFile(path.join(__dirname,'public','error.html'))
+                    } else {
+                      console.log('Email sent: ' + info.response);
+                      emailSent = true
+                      if(emailSent && blockchain && dataBase){
+                        res.status(200).sendFile(path.join(__dirname,'public','success.html'))
+                        }
+                    }
+                  });
+
+                
+            }})
+    }
+    app.post('/generate',async(req,res)=>{
+        console.log('generate')
+        fs.createReadStream("./data.csv")
+        .pipe(parse({ delimiter: ",", from_line: 2 }))
+        .on("data", async function (row) {
+            console.log(row);
+            let fname = row[0];
+            let lname = row[1];
+            let rollNo = row[2];
+            let semester = row[3];
+            let email = row[4];
+            let mark1 = row[5];
+            let mark2 = row[6];
+            let mark3 = row[7];
+            let mark4 = row[8];
+            let mark5 = row[9];
+            await generateAMarksheet(fname,lname,parseInt(rollNo),parseInt(semester),email,parseInt(mark1),parseInt(mark2),parseInt(mark3),parseInt(mark4),parseInt(mark5))
+
+        })
+        .on("end", function () {
+            console.log("finished");
+        })
+        .on("error", function (error) {
+            console.log(error.message);
+        });
+        res.status(200).send('yes')
+    })
     app.post('/addstudent',async(req,res)=>
     {
         const {fname,lname,Rollno,Email,Mark1,Mark2,Mark3,Mark4,Mark5} = req.body;

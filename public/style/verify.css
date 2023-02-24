@@ -1,19 +1,22 @@
 *{
     /* background-color: #F2F2F2; */
     font-family: 'Montserrat', sans-serif;
-    color: white;
+    
 }
-
 body{
     background-image: url('/images/bg.jpg');
+    background-repeat: no-repeat;
+    /* background-size: auto; */
     background-size: cover;
+    
+    /* background-origin: content-box; */
 }
 .navItem{
-    color: black;
+    color: rgb(255, 255, 255);
     font-size: 1rem;
 }
 .navItem:hover{
-    color: black;
+    color: rgb(255, 255, 255);
     text-decoration: none;
     font-weight: 600;
 
@@ -23,7 +26,16 @@ body{
     color: #ffffff !important;
     border: 1px solid #183348 !important;
     background-color: #183348 !important;
-    min-width: 7rem;
+    width: 7rem;
+}
+
+.adminDiv {
+    background-color: white !important;
+    padding: 7rem 1.5rem;
+    text-align: center;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    
 }
 .navbar{
     /* From https://css.glass */
@@ -34,23 +46,8 @@ backdrop-filter: blur(5px);
 -webkit-backdrop-filter: blur(5px);
 border: 1px solid rgba(255, 255, 255, 0.3);
 }
-.adminDiv {
-    padding: 7rem 1.5rem;
-    text-align: center;
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-margin-top: 5rem;
-    background: rgba(255, 255, 255, 0.2);
-    color: white;
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    padding-top: 5rem;
-    
-}
 .adminDiv h1, .adminDiv form, .adminDiv label, .adminDiv input{
-    /* background-color: white; */
+    background-color: white;
 }
 .form-group{
     text-align: left;
