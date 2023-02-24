@@ -31,16 +31,16 @@ function routes(app,dbe,lms,accounts){
             res.status(401).send('Admin not approved')
         }
     })
-    function generateAMarksheet(fname,lname,Rollno,semester,Email,Mark1,Mark2,Mark3,Mark4,Mark5){
+    async function generateAMarksheet(fname,lname,Rollno,semester,Email,Mark1,Mark2,Mark3,Mark4,Mark5){
         if(fname==""||lname==""||Rollno==""||Email==""||Mark1==""||Mark2==""||Mark3==""||Mark4==""||Mark5==""||semester==""){
-            res.send('Invalid Input! Enter data.')
+            return 'Invalid data ', Rollno
         }
         let name = fname + " "+ lname
         console.log(name,Rollno,Email,Mark1,Mark2,Mark3,Mark4,Mark5)
-        db.findOne({Rollno},async (err,student)=>{
+        await db.findOne({Rollno},async (err,student)=>{
             if(student){
                 console.log('Already Present');
-                res.status(401).sendFile(path.join(__dirname,'public','error.html'))
+                return `already Present ${Rollno}`
             }else{   
                 let dataBase = false, blockchain = false, emailSent = false;
                 console.log('Not there');
@@ -50,18 +50,18 @@ function routes(app,dbe,lms,accounts){
                 console.log(ContentAfterHash);
                 const proc = await db.insertOne({name,Rollno,Email,Mark1,Mark2,Mark3,Mark4,Mark5})
                 if(proc){
-                    console.log('Stored in DB');
+                    console.log('Stored in DB'+ Rollno);
                     dataBase = true
                 }else{
-                    console.log('Some error occured');
+                    console.log('Some error occured in storing in DB'+ Rollno);
                 }
 
                 const BlockChainSave = await lms.GenerateCertificate(Rollno,ContentAfterHash,{from:accounts[0]})
                 if(BlockChainSave){
-                    console.log('Stored in BlockChain')
+                    console.log('Stored in BlockChain'+ Rollno)
                     blockchain = true
                 }else{
-                    console.log('Some error occured to store the value in Blockchain')
+                    console.log('Some error occured to store the value in Blockchain' +Rollno)
                 }
 
                 let HTMLContent = `
@@ -108,13 +108,14 @@ function routes(app,dbe,lms,accounts){
                 await transporter.sendMail(mailOptions, function(error, info){
                     if (error) {
                       console.log(error);
-                      res.status(400).sendFile(path.join(__dirname,'public','error.html'))
+                      return 'error';
                     } else {
                       console.log('Email sent: ' + info.response);
                       emailSent = true
+                      console.log(emailSent+"email"+blockchain+"block "+dataBase);
                       if(emailSent && blockchain && dataBase){
-                        res.status(200).sendFile(path.join(__dirname,'public','success.html'))
-                        }
+                        return 'success';
+                    }
                     }
                   });
 
@@ -137,8 +138,8 @@ function routes(app,dbe,lms,accounts){
             let mark3 = row[7];
             let mark4 = row[8];
             let mark5 = row[9];
-            await generateAMarksheet(fname,lname,parseInt(rollNo),parseInt(semester),email,parseInt(mark1),parseInt(mark2),parseInt(mark3),parseInt(mark4),parseInt(mark5))
-
+            let output = await generateAMarksheet(fname,lname,parseInt(rollNo),parseInt(semester),email,parseInt(mark1),parseInt(mark2),parseInt(mark3),parseInt(mark4),parseInt(mark5))
+            console.log("out"+output)
         })
         .on("end", function () {
             console.log("finished");

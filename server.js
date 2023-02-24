@@ -27,7 +27,7 @@ if (typeof web3 !== 'undefined') {
 const LMS = contract(artifacts)
 LMS.setProvider(web3.currentProvider)
 
-mongodb.connect('mongodb://localhost:27017/test',{ useUnifiedTopology: true }, async(err,client)=>{
+mongodb.connect('mongodb://localhost:27017/marksheet',{ useUnifiedTopology: true }, async(err,client)=>{
     if(client){
         console.log('Done')
     }
