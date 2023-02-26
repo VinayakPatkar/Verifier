@@ -85,7 +85,7 @@ backdrop-filter: blur(5px);
 border: 1px solid rgba(255, 255, 255, 0.3);
 }
 .mainText img{
-    background-color: #1A1300 !important;  
+    background-color: transparent;  
 }
 .mainText a:hover{
     color: white;
@@ -207,6 +207,45 @@ border: 1px solid rgba(255, 255, 255, 0.3);
     /* display: flex; */
     flex-direction: column;
 }
+.button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    flex-wrap: wrap;
+  }
+  
+  /* Style the buttons */
+  .button {
+    color: white;
+    font-weight: bold;
+    font-size: 1.3rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    min-height: 300px;
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+   min-width: 100%;
+  }
+
+  .button-container form{
+    width: 27%;
+    margin: 1rem;
+  }
+  .button:hover {
+    background-color: #183449;
+  }
+  @media only screen and (max-width: 600px) {
+
+    .button-container form{
+      width: 80%;
+    }
+  }
 @media only screen and (max-width: 800px){
     .featureDiv{
         flex-direction: column;
@@ -222,10 +261,15 @@ border: 1px solid rgba(255, 255, 255, 0.3);
         align-items: center;
         line-height: 3.5rem;
     }
+    .mission div {
+        min-height: 0px;
+    }
     #inner1 {
         float:left; 
      }
-     
+     .mainText {
+        width: 100%;
+     }
     #inner2{
         float:left; 
         clear: left;

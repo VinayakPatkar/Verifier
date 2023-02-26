@@ -38,31 +38,33 @@
         margin-top: 6rem;
       }
       .navButton{
-    border-radius: 50rem !important;
-    color: #ffffff !important;
-    border: 1px solid #183348 !important;
-    background-color: #183348 !important;
-    min-width: 7rem;
-}
-.navbar{
-    /* From https://css.glass */
-background: rgba(255, 255, 255, 0.2);
+          border-radius: 50rem !important;
+          color: #ffffff !important;
+          border: 1px solid #183348 !important;
+          background-color: #183348 !important;
+          min-width: 7rem;
+      }
+      .navbar{
+          /* From https://css.glass */
+      background: rgba(255, 255, 255, 0.2);
 
-box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-backdrop-filter: blur(5px);
--webkit-backdrop-filter: blur(5px);
-border: 1px solid rgba(255, 255, 255, 0.3);
-}
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      }
+
+
     </style>
 </head>
 <body>
 
       <div class="mainDiv">
-        <nav class="navbar navbar-expand-lg ">
+        <nav class="navbar ">
           <a class="navbar-brand" href="#">
               <img src="images/logo.png" width="100" height="auto" alt="">
             </a>
-          <div class="collapse navbar-collapse" id="navbarText">
+          <div  id="navbarText">
             <ul class="navbar-nav mr-auto">
   
             </ul>
@@ -71,21 +73,43 @@ border: 1px solid rgba(255, 255, 255, 0.3);
             </span>
           </div>
         </nav>
-        <div class="dashboardMain">
+        <div class="dashboardMain button-container">
+
           <form action="/aMarksheet" method="post">
-            <input type="submit" value="generate a marksheet">
+            <button class="button">
+              <div>
+                <img src="/images/generate.png" width="50%" height="auto">
+              </div>
+              Generate a marksheet
+            </button>
           </form>
           <form action="/csvMarksheet" method="post">
-            <input type="submit" value="generate marksheets Using CSV">
+            <button class="button">
+              <div>
+                <img src="/images/stackMarksheet.webp" width="50%" height="auto">
+              </div>
+              Generate marksheets Using CSV
+            </button>
           </form>
           <form action="/listall" method="post">
-            <input type="submit" value="List all Students">
+            <button class="button" type="submit">
+              <div>
+                <img src="/images/listall.png" width="50%" height="auto">
+              </div>
+              List all
+            </button>
           </form>
+          
           </div>
+          <footer id="footer" class="footer">
+            <div>
+              Made by: <a href="https://github.com/karishmarajput">Karishma </a>, Vasundhara, Pratik & Aditya.
+            </div>
+        </footer> 
         </body>
       <script>
         function redirectToHome(){
-            window.location.href = window.location.href.replace('addstudent', '') 
+            window.location.href = window.location.href.replace('login', '') 
         }
 
       </script>

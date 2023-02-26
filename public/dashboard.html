@@ -53,43 +53,56 @@ backdrop-filter: blur(5px);
 -webkit-backdrop-filter: blur(5px);
 border: 1px solid rgba(255, 255, 255, 0.3);
 }
+
     </style>
 </head>
 <body>
 
       <div class="mainDiv">
-        <nav class="navbar ">
+        <nav class="navbar">
           <a class="navbar-brand" href="#">
               <img src="images/logo.png" width="100" height="auto" alt="">
             </a>
-          <div class="collapse " id="navbarText">
+          <div class="" id="navbarText">
             <ul class="navbar-nav mr-auto">
   
             </ul>
-            <!-- <span class="navbar-text">
+            <span class="navbar-text">
               <button class="btn btn-warning navButton" onclick="redirectToHome()"> Home</button>
-            </span> -->
+            </span>
           </div>
         </nav>
-        <div class="card">
-          <div style="border-radius:200px; height: 300px; max-width:500px; background: transparent; margin:0 auto;">
-            <image src="/images/verify.png" width="200px" height="auto"></image>
+        <div class="dashboardMain button-container">
+          <form action="/verify" method="get">
+            <button class="button">
+              <div>
+                <img src="/images/verifyDB.png" width="50%" height="auto">
+              </div>
+              Verify a marksheet
+            </button>
+          </form>
+          <form action="/reissueMarksheet" method="get">
+            <button class="button">
+              <div>
+                <img src="/images/reissue.png" width="50%" height="auto">
+              </div>
+              Re-Issue a marksheet
+            </button>
+          </form>
+
+          
           </div>
-            
-            <p>Successfully done</p>
-          </div>
-   
-      </div>
-      <footer id="footer" class="footer">
-        <div>
-          Made by: <a href="https://github.com/karishmarajput">Karishma </a>, Vasundhara, Pratik & Aditya.
-        </div>
-    </footer> 
-  </body>
+          <footer id="footer" class="footer">
+            <div>
+              Made by: <a href="https://github.com/karishmarajput">Karishma </a>, Vasundhara, Pratik & Aditya.
+            </div>
+        </footer> 
+        </body>
       <script>
         function redirectToHome(){
-            window.location.href = window.location.href.replace('addstudent', '') 
+            window.location.href = window.location.href.replace('dashboard', '') 
         }
+
       </script>
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>

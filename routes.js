@@ -17,8 +17,14 @@ function routes(app,dbe,lms,accounts){
     app.get('/login',(req,res)=>{
         res.status(200).sendFile(path.join(__dirname,'public','admin.html'))
     })
+    app.get('/dashboard',(req,res)=>{
+        res.status(200).sendFile(path.join(__dirname,'public','dashboard.html'))
+    })
     app.get('/verify',(req,res)=>{
         res.status(200).sendFile(path.join(__dirname,'public','verify.html'))
+    })
+    app.get('/reissueMarksheet',(req,res)=>{
+        res.status(200).sendFile(path.join(__dirname,'public','reissue.html'))
     })
     app.get('/generate',(req,res)=>{
         res.status(200).sendFile(path.join(__dirname,'public','generate.html'))
@@ -42,10 +48,211 @@ function routes(app,dbe,lms,accounts){
     app.post("/csvMarksheet",(req,res)=>{
         res.status(200).sendFile(path.join(__dirname,'public','generate.html'))
     })
+    function marksheetTemp(name,Rollno,Mark1,Mark2,Mark3,Mark4,Mark5){
+        let HTMLContent = `
+                <!doctype html>
+                <html>
+                <head>
+                    <meta charset="UTF-8">
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+                    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
+                    <script>
+                        tailwind.config = {
+                            theme: {
+                                extend: {
+                                    fontFamily: {
+                                        sans: ['Inter var', ...defaultTheme.fontFamily.sans],
+                                    },
+                                }
+                            }
+                        }
+                    </script>
+                </head>
+                <body class="antialiased">
+                <div class="prose lg:prose-2xl mx-auto my-2 border rounded border-blue-500">
+                    <div class="flex flex-nowrap justify-center">
+                        <div class="grid grid-rows-auto gap-0">
+                            <div id="header" class="flex justify-around items-center px-10 gap-10">
+                                <img class="w-24  rounded" src="https://justtsolutions.files.wordpress.com/2018/08/mumbai-university-logo.jpg?w=500"
+                                    alt="logo">
+                                <div class="grid grid-rows-auto gap-1 py-2 text-center rounded ">
+                                    <span class="text-2xl font-semibold uppercase">Fr. C. Rodrigues Institute of Technology</span>
+                                    <span class="text-base">
+                                        Motto: Love Your Neighbour As Your Self<br>
+                                        Sector 9-A, Vashi, Navi Mumbai, Maharashtra, India PIN - 400703 <br>
+                                        Tel: 070xxxxxxxxx, 090xxxxxxxxx <br>
+                                    </span>
+                                    <span class="text-1xl font-semibold uppercase">Marks Sheet</span>
+                                </div>
+
+                                <img class="w-24 rounded" src="https://uploads.sarvgyan.com/2015/08/Fr.-C.-Rodrigues-Institute-of-Technology-Vashi.jpg"
+                                    alt="logo">
+                            </div>
+                            <div id="studentProfile" class="flex justify-between items-center prose-table:my-0 p-3 gap-4">
+                                <table class="table-fixed border-collapse border border-slate-400 uppercase font-semibold">
+                                    <tbody>
+                                    <tr>
+                                        <td class="border border-slate-400 text-sm">SESSION: <span>2023</span></td>
+                                        <td class="border border-slate-400 text-sm">EXAMINATION: <span>SUMMER SESSION</span></td>
+                                        <td class="border border-slate-400 text-sm">SEAT NO: ${Rollno}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="border border-slate-400 text-sm">NAME OF STUDENT: <span> ${name}</span></td>
+                                        <td class="border border-slate-400 text-sm">SEMISTER: <span>6<sup>th</sup></span></td>
+                                        <td class="border border-slate-400 text-sm">ROLL NO:  ${Rollno}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div id="academicRecord" class="grid grid-rows-auto  prose-table:my-0 p-3 gap-1">
+                                <table class="table-fixed border-collapse border border-slate-400 text-center uppercase font-semibold">
+                                    <thead>
+                                    <tr>
+                                    <th class="border border-slate-400 text-sm">COURSE CODE</th>
+                                    <th class="border border-slate-400 text-sm">COURSE NAME</th>
+                                    <th class="border border-slate-400 text-sm">MAXIMUM MARKS</th>
+                                    <th class="border border-slate-400 text-sm">OBTAINED MARKS</th>
+                                    </tr>
+                                    <tr>
+                                    <td class="border border-slate-400 text-sm">CSC601</td>
+                                    <td class="border border-slate-400 text-sm text-left">System Programming & Compiler Construction</td>
+                                    <td class="border border-slate-400 text-sm">100 </td>
+                                    <td class="border border-slate-400 text-sm">${Mark1} </td>
+                                    </tr>
+                                    <tr>
+                                    <td class="border border-slate-400 text-sm">CSC602</td>
+                                    <td class="border border-slate-400 text-sm text-left">Cryptography & System Security </td>
+                                    <td class="border border-slate-400 text-sm">100 </td>
+                                    <td class="border border-slate-400 text-sm">${Mark2} </td>
+                                    </tr>
+                                    <tr>
+                                    <td class="border border-slate-400 text-sm">CSC603</td>
+                                    <td class="border border-slate-400 text-sm text-left">Mobile Computing</td>
+                                    <td class="border border-slate-400 text-sm">100 </td>
+                                    <td class="border border-slate-400 text-sm"> ${Mark4}</td>
+                                    </tr>
+                                    <tr>
+                                    <td class="border border-slate-400 text-sm">CSC604 </td>
+                                    <td class="border border-slate-400 text-sm text-left">Artificial Intelligence</td>
+                                    <td class="border border-slate-400 text-sm">100 </td>
+                                    <td class="border border-slate-400 text-sm"> ${Mark3}</td>
+                                    </tr>
+                                    <tr>
+                                    <td class="border border-slate-400 text-sm">CSDLO601 1/3</td>
+                                    <td class="border border-slate-400 text-sm text-left">Department Level Optional Course -2</td>
+                                    <td class="border border-slate-400 text-sm">100 </td>
+                                    <td class="border border-slate-400 text-sm">${Mark5} </td>
+                                    </tr>
+                                    </thead>
+                                </table>
+                                <table class="table-fixed border-collapse border border-slate-400 text-left uppercase font-semibold">
+                                    <thead>
+                                    <tr>
+                                        <th class="border border-slate-400 text-sm">TOTAL MARKS OBTAINABLE: <span>500 </span></th>
+                                        <th class="border border-slate-400 text-sm">TOTAL MARKS OBTAINED: <span>${parseInt(Mark1)+parseInt(Mark2)+parseInt(Mark3)+parseInt(Mark4)+parseInt(Mark5)}</span></th>
+                                        <th class="border border-slate-400 text-sm">GRADE: <br> <span></span></th>
+                                    </tr>
+                                    </thead>
+                                </table> 
+                            </div>
+                            <div id="remarks" class="prose-table:my-0 p-3 gap-1">
+                                <table class="table-auto border-collapse border border-slate-400 font-semibold">
+                                    <thead>
+                                    <tr>
+                                        <th class="border border-slate-400 text-sm">
+                                            <span class="uppercase">Abbrevations: </span>
+                                            <span>P-Pass, F-Fail, AB-Absent</span>
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <th class="border border-slate-400 text-sm">
+                                            <span class="uppercase">NOTE:</span>
+                                            <span>THIS IS A COMPUTER GENERATED PDF.</span>
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <th class="border border-slate-400 text-sm">
+                                            <span class="uppercase">Issue Month:</span>
+                                            <span class="uppercase">June,2023</span>
+                                            
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                            <span class="font-semibold text-center">******FOR AUTHENTICITY USE VERIFIER******</span>
+                        </div>
+                    </div>
+                </div>
+                </body>
+                </html>`;
+        return HTMLContent;
+    }
+    function messageContent(name){
+        let message = `Hello ${name},<br>
+                This is your marksheet of semester-6 Computer Science, Mumbai University.<br>
+                It is generated using Verifier. You can check your marksheet's credibility using verifier.<br>
+                Have a good day,<br> Thank you.`
+        return message
+    }
+    app.post("/reissue",(req,res)=>{
+        let Rollno = parseInt(req.body.rollNo);
+        console.log(Rollno)
+        db.findOne({Rollno},async (err,student)=>{
+            console.log(student)
+            if(!student){
+                res.status(400).sendFile(path.join(__dirname,'public','error.html'))
+                console.log(`Roll No: ${Rollno} is not present. Please enter the correct Roll No.`);
+            }else{
+                console.log(student);
+                
+                let HTMLContent = marksheetTemp(student.name,Rollno,student.Mark1,student.Mark2,student.Mark3,student.Mark4,student.Mark5)
+                let message = messageContent(student.name)
+                const nodemailer = require('nodemailer');
+                var transporter = nodemailer.createTransport({
+                    service: 'outlook',
+                    auth: {
+                      user: 'verifiertheoriginal@outlook.com',
+                      pass: 'Verifier$321'
+                    }
+                  });
+                let file = { content: HTMLContent };
+                let options = { format: "A4" };
+                const pdfBuffer = await html_to_pdf.generatePdf(file, options);
+                if(pdfBuffer){
+                    console.log('pdfbuffer constructed');
+                }else{
+                    console.log('Could not construct pdfBuffer')
+                }
+                var mailOptions = {
+                    from: 'verifiertheoriginal@outlook.com',
+                    to: student.Email,
+                    subject: 'Sem 6 Marksheet',
+                    attachments: [{
+                        filename: `Marksheet.pdf`,
+                        content: pdfBuffer            
+                    }],
+                    html:  message,
+                  };
+                  
+                await transporter.sendMail(mailOptions, function(error, info){
+                    if (error) {
+                      console.log(error);
+                      res.status(400).sendFile(path.join(__dirname,'public','error.html'))
+                    } else {
+                      console.log('Email sent: ' + info.response);
+                      res.status(200).sendFile(path.join(__dirname,'public','success.html'))
+                    }
+                  });
+            }
+        })
+    })
     app.post("/listall",(req,res)=>{
         db.find({}).toArray(function(err, result) {
             if (err) {
                 console.log(err);
+                res.status(400).sendFile(path.join(__dirname,'public','error.html'))
             } else {
                 
                 res.render("listAll", { student: result })
@@ -54,8 +261,8 @@ function routes(app,dbe,lms,accounts){
             
           });
         }
-        // res.status(200).sendFile(path.join(__dirname,'public','listAll.html'))
     )
+   
     function addStudent(row){
         let fname = row[0];
         let lname = row[1];
@@ -100,182 +307,8 @@ function routes(app,dbe,lms,accounts){
                     console.log('Some error occured to store the value in Blockchain' +Rollno)
                     return true
                 }
-                let HTMLContent = `
-                <!doctype html>
-<html>
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
-     <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Inter var', ...defaultTheme.fontFamily.sans],
-                    },
-                }
-            }
-        }
-    </script>
-</head>
-
-<body class="antialiased">
-<div class="prose lg:prose-2xl mx-auto my-2 border rounded border-blue-500">
-
-    <div class="flex flex-nowrap justify-center">
-        <div class="grid grid-rows-auto gap-0">
-
-            
-
-
-
-
-            <div id="header" class="flex justify-around items-center px-10 gap-10">
-                <img class="w-24  rounded" src="https://justtsolutions.files.wordpress.com/2018/08/mumbai-university-logo.jpg?w=500"
-                     alt="logo">
-
-                <div class="grid grid-rows-auto gap-1 py-2 text-center rounded ">
-                    <span class="text-2xl font-semibold uppercase">Fr. C. Rodrigues Institute of Technology</span>
-                    <span class="text-base">
-                        Motto: Love Your Neighbour As Your Self<br>
-                        Sector 9-A, Vashi, Navi Mumbai, Maharashtra, India PIN - 400703 <br>
-                        Tel: 070xxxxxxxxx, 090xxxxxxxxx <br>
-                    </span>
-                    <span class="text-1xl font-semibold uppercase">Marks Sheet</span>
-                </div>
-
-                <img class="w-24 rounded" src="https://uploads.sarvgyan.com/2015/08/Fr.-C.-Rodrigues-Institute-of-Technology-Vashi.jpg"
-                     alt="logo">
-            </div>
-            
-
-
-
-
-
-            <div id="studentProfile" class="flex justify-between items-center prose-table:my-0 p-3 gap-4">
-                <table class="table-fixed border-collapse border border-slate-400 uppercase font-semibold">
-                    <tbody>
-                    <tr>
-                        <td class="border border-slate-400 text-sm">SESSION: <span>2023</span></td>
-                        <td class="border border-slate-400 text-sm">EXAMINATION: <span>SUMMER SESSION</span></td>
-                        <td class="border border-slate-400 text-sm">SEAT NO: ${Rollno}</td>
-                    </tr>
-                    <tr>
-                        <td class="border border-slate-400 text-sm">NAME OF STUDENT: <span> ${name}</span></td>
-                        <td class="border border-slate-400 text-sm">SEMISTER: <span>6<sup>th</sup></span></td>
-                        <td class="border border-slate-400 text-sm">ROLL NO:  ${Rollno}</td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-    
-
-
-
-
-
-
-            <div id="academicRecord" class="grid grid-rows-auto  prose-table:my-0 p-3 gap-1">
-                <table class="table-fixed border-collapse border border-slate-400 text-center uppercase font-semibold">
-                    <thead>
-                    <tr>
-                      <th class="border border-slate-400 text-sm">COURSE CODE</th>
-                      <th class="border border-slate-400 text-sm">COURSE NAME</th>
-                      <th class="border border-slate-400 text-sm">MAXIMUM MARKS</th>
-                      <th class="border border-slate-400 text-sm">OBTAINED MARKS</th>
-                    </tr>
-                    <tr>
-                      <td class="border border-slate-400 text-sm">CSC601</td>
-                      <td class="border border-slate-400 text-sm text-left">System Programming & Compiler Construction</td>
-                      <td class="border border-slate-400 text-sm">100 </td>
-                      <td class="border border-slate-400 text-sm">${Mark1} </td>
-                    </tr>
-                    <tr>
-                      <td class="border border-slate-400 text-sm">CSC602</td>
-                      <td class="border border-slate-400 text-sm text-left">Cryptography & System Security </td>
-                      <td class="border border-slate-400 text-sm">100 </td>
-                      <td class="border border-slate-400 text-sm">${Mark2} </td>
-                    </tr>
-                    <tr>
-                      <td class="border border-slate-400 text-sm">CSC603</td>
-                      <td class="border border-slate-400 text-sm text-left">Mobile Computing</td>
-                      <td class="border border-slate-400 text-sm">100 </td>
-                      <td class="border border-slate-400 text-sm"> ${Mark4}</td>
-                    </tr>
-                    <tr>
-                      <td class="border border-slate-400 text-sm">CSC604 </td>
-                      <td class="border border-slate-400 text-sm text-left">Artificial Intelligence</td>
-                      <td class="border border-slate-400 text-sm">100 </td>
-                      <td class="border border-slate-400 text-sm"> ${Mark3}</td>
-                    </tr>
-                    <tr>
-                      <td class="border border-slate-400 text-sm">CSDLO601 1/3</td>
-                      <td class="border border-slate-400 text-sm text-left">Department Level Optional Course -2</td>
-                      <td class="border border-slate-400 text-sm">100 </td>
-                      <td class="border border-slate-400 text-sm">${Mark5} </td>
-                    </tr>
-                    </thead>
-                  </table>
-                  
-        
-                <table class="table-fixed border-collapse border border-slate-400 text-left uppercase font-semibold">
-                    <thead>
-                    <tr>
-                        <th class="border border-slate-400 text-sm">TOTAL MARKS OBTAINABLE: <span>500 </span></th>
-                        <th class="border border-slate-400 text-sm">TOTAL MARKS OBTAINED: <span>${parseInt(Mark1)+parseInt(Mark2)+parseInt(Mark3)+parseInt(Mark4)+parseInt(Mark5)}</span></th>
-                        <th class="border border-slate-400 text-sm">GRADE: <br> <span></span></th>
-                    </tr>
-                    </thead>
-                </table>
-                
-            </div>
-            
-        
-
-
-
-
-
-            <div id="remarks" class="prose-table:my-0 p-3 gap-1">
-                <table class="table-auto border-collapse border border-slate-400 font-semibold">
-                    <thead>
-                    <tr>
-                        <th class="border border-slate-400 text-sm">
-                            <span class="uppercase">Abbrevations: </span>
-                            <span>P-Pass, F-Fail, AB-Absent</span>
-                        </th>
-                    </tr>
-                    <tr>
-                        <th class="border border-slate-400 text-sm">
-                            <span class="uppercase">NOTE:</span>
-                            <span>THIS IS A COMPUTER GENERATED PDF.</span>
-                        </th>
-                    </tr>
-                    <tr>
-                        <th class="border border-slate-400 text-sm">
-                            <span class="uppercase">Issue Month:</span>
-                            <span class="uppercase">June,2023</span>
-                            
-                        </th>
-                    </tr>
-                    </thead>
-                </table>
-            </div>
-            <span class="font-semibold text-center">******FOR AUTHENTICITY USE VERIFIER******</span>
-        </div>
-    </div>
-</div>
-</body>S
-
-</html>`;
-                let message = `Hello ${name},<br>
-                This is your marksheet of semester-6 Computer Science, Mumbai University.<br>
-                It is generated using Verifier. You can check your marksheet's credibility using verifier.<br>
-                Have a good day,<br> Thank you.`
+                let HTMLContent = marksheetTemp(name,Rollno,Mark1,Mark2,Mark3,Mark4,Mark5)
+                let message = messageContent(name)
                 
                 var transporter = nodemailer.createTransport({
                     service: 'outlook',
@@ -330,10 +363,9 @@ function routes(app,dbe,lms,accounts){
         console.log('generate')
         let arr = new Array();
         fs.createReadStream("./data.csv")
-        .pipe(parse({ delimiter: ",", from_line: 2 }))
+        .pipe(parse({ delimiter: ",", from_line: 1 }))
         .on("data",async function (row) {
             arr.push(row)
-            
         })
         .on("end", async ()=> {
             console.log(arr.length)
@@ -345,7 +377,7 @@ function routes(app,dbe,lms,accounts){
                     console.log(arr[i][0]+arr[i][2]+' already present');
                     continue;
                 }
-                await delay(15000)
+                await delay(10000)
             }
             console.log("finished");
             res.status(200).sendFile(path.join(__dirname,'public','success.html'))
@@ -392,182 +424,8 @@ function routes(app,dbe,lms,accounts){
                     console.log('Some error occured to store the value in Blockchain')
                 }
 
-                let HTMLContent = `
-                <!doctype html>
-<html>
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
-     <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Inter var', ...defaultTheme.fontFamily.sans],
-                    },
-                }
-            }
-        }
-    </script>
-</head>
-
-<body class="antialiased">
-<div class="prose lg:prose-2xl mx-auto my-2 border rounded border-blue-500">
-
-    <div class="flex flex-nowrap justify-center">
-        <div class="grid grid-rows-auto gap-0">
-
-            
-
-
-
-
-            <div id="header" class="flex justify-around items-center px-10 gap-10">
-                <img class="w-24  rounded" src="https://justtsolutions.files.wordpress.com/2018/08/mumbai-university-logo.jpg?w=500"
-                     alt="logo">
-
-                <div class="grid grid-rows-auto gap-1 py-2 text-center rounded ">
-                    <span class="text-2xl font-semibold uppercase">Fr. C. Rodrigues Institute of Technology</span>
-                    <span class="text-base">
-                        Motto: Love Your Neighbour As Your Self<br>
-                        Sector 9-A, Vashi, Navi Mumbai, Maharashtra, India PIN - 400703 <br>
-                        Tel: 070xxxxxxxxx, 090xxxxxxxxx <br>
-                    </span>
-                    <span class="text-1xl font-semibold uppercase">Marks Sheet</span>
-                </div>
-
-                <img class="w-24 rounded" src="https://uploads.sarvgyan.com/2015/08/Fr.-C.-Rodrigues-Institute-of-Technology-Vashi.jpg"
-                     alt="logo">
-            </div>
-            
-
-
-
-
-
-            <div id="studentProfile" class="flex justify-between items-center prose-table:my-0 p-3 gap-4">
-                <table class="table-fixed border-collapse border border-slate-400 uppercase font-semibold">
-                    <tbody>
-                    <tr>
-                        <td class="border border-slate-400 text-sm">SESSION: <span>2023</span></td>
-                        <td class="border border-slate-400 text-sm">EXAMINATION: <span>SUMMER SESSION</span></td>
-                        <td class="border border-slate-400 text-sm">SEAT NO: ${Rollno}</td>
-                    </tr>
-                    <tr>
-                        <td class="border border-slate-400 text-sm">NAME OF STUDENT: <span> ${name}</span></td>
-                        <td class="border border-slate-400 text-sm">SEMISTER: <span>6<sup>th</sup></span></td>
-                        <td class="border border-slate-400 text-sm">ROLL NO:  ${Rollno}</td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-    
-
-
-
-
-
-
-            <div id="academicRecord" class="grid grid-rows-auto  prose-table:my-0 p-3 gap-1">
-                <table class="table-fixed border-collapse border border-slate-400 text-center uppercase font-semibold">
-                    <thead>
-                    <tr>
-                      <th class="border border-slate-400 text-sm">COURSE CODE</th>
-                      <th class="border border-slate-400 text-sm">COURSE NAME</th>
-                      <th class="border border-slate-400 text-sm">MAXIMUM MARKS</th>
-                      <th class="border border-slate-400 text-sm">OBTAINED MARKS</th>
-                    </tr>
-                    <tr>
-                      <td class="border border-slate-400 text-sm">CSC601</td>
-                      <td class="border border-slate-400 text-sm text-left">System Programming & Compiler Construction</td>
-                      <td class="border border-slate-400 text-sm">100 </td>
-                      <td class="border border-slate-400 text-sm">${Mark1} </td>
-                    </tr>
-                    <tr>
-                      <td class="border border-slate-400 text-sm">CSC602</td>
-                      <td class="border border-slate-400 text-sm text-left">Cryptography & System Security </td>
-                      <td class="border border-slate-400 text-sm">100 </td>
-                      <td class="border border-slate-400 text-sm">${Mark2} </td>
-                    </tr>
-                    <tr>
-                      <td class="border border-slate-400 text-sm">CSC603</td>
-                      <td class="border border-slate-400 text-sm text-left">Mobile Computing</td>
-                      <td class="border border-slate-400 text-sm">100 </td>
-                      <td class="border border-slate-400 text-sm"> ${Mark4}</td>
-                    </tr>
-                    <tr>
-                      <td class="border border-slate-400 text-sm">CSC604 </td>
-                      <td class="border border-slate-400 text-sm text-left">Artificial Intelligence</td>
-                      <td class="border border-slate-400 text-sm">100 </td>
-                      <td class="border border-slate-400 text-sm"> ${Mark3}</td>
-                    </tr>
-                    <tr>
-                      <td class="border border-slate-400 text-sm">CSDLO601 1/3</td>
-                      <td class="border border-slate-400 text-sm text-left">Department Level Optional Course -2</td>
-                      <td class="border border-slate-400 text-sm">100 </td>
-                      <td class="border border-slate-400 text-sm">${Mark5} </td>
-                    </tr>
-                    </thead>
-                  </table>
-                  
-        
-                <table class="table-fixed border-collapse border border-slate-400 text-left uppercase font-semibold">
-                    <thead>
-                    <tr>
-                        <th class="border border-slate-400 text-sm">TOTAL MARKS OBTAINABLE: <span>500 </span></th>
-                        <th class="border border-slate-400 text-sm">TOTAL MARKS OBTAINED: <span>${parseInt(Mark1)+parseInt(Mark2)+parseInt(Mark3)+parseInt(Mark4)+parseInt(Mark5)}</span></th>
-                        <th class="border border-slate-400 text-sm">GRADE: <br> <span></span></th>
-                    </tr>
-                    </thead>
-                </table>
-                
-            </div>
-            
-        
-
-
-
-
-
-            <div id="remarks" class="prose-table:my-0 p-3 gap-1">
-                <table class="table-auto border-collapse border border-slate-400 font-semibold">
-                    <thead>
-                    <tr>
-                        <th class="border border-slate-400 text-sm">
-                            <span class="uppercase">Abbrevations: </span>
-                            <span>P-Pass, F-Fail, AB-Absent</span>
-                        </th>
-                    </tr>
-                    <tr>
-                        <th class="border border-slate-400 text-sm">
-                            <span class="uppercase">NOTE:</span>
-                            <span>THIS IS A COMPUTER GENERATED PDF.</span>
-                        </th>
-                    </tr>
-                    <tr>
-                        <th class="border border-slate-400 text-sm">
-                            <span class="uppercase">Issue Month:</span>
-                            <span class="uppercase">June,2023</span>
-                            
-                        </th>
-                    </tr>
-                    </thead>
-                </table>
-            </div>
-            <span class="font-semibold text-center">******FOR AUTHENTICITY USE VERIFIER******</span>
-        </div>
-    </div>
-</div>
-</body>
-
-</html>`;
-                let message = `Hello ${name},<br>
-                This is your marksheet of semester-6 Computer Science, Mumbai University.<br>
-                It is generated using Verifier. You can check your marksheet's credibility using verifier.<br>
-                Have a good day,<br> Thank you.`
+                let HTMLContent = marksheetTemp(name,Rollno,Mark1,Mark2,Mark3,Mark4,Mark5)
+                let message = messageContent(name)
                 const nodemailer = require('nodemailer');
                 var transporter = nodemailer.createTransport({
                     service: 'outlook',
@@ -588,7 +446,6 @@ function routes(app,dbe,lms,accounts){
                     from: 'verifiertheoriginal@outlook.com',
                     to: Email,
                     subject: 'Sem 6 Marksheet',
-                    // text: 'That was easy!',
                     attachments: [{
                         filename: `Marksheet.pdf`,
                         content: pdfBuffer            

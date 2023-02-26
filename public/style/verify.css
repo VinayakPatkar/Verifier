@@ -3,13 +3,12 @@
     font-family: 'Montserrat', sans-serif;
     
 }
-body{
+.mainDiv{
+    width: 100%;
+    min-height: 100vh;
+    /* padding: 2rem; */
     background-image: url('/images/bg.jpg');
-    background-repeat: no-repeat;
-    /* background-size: auto; */
     background-size: cover;
-    
-    /* background-origin: content-box; */
 }
 .navItem{
     color: rgb(255, 255, 255);
@@ -51,4 +50,16 @@ border: 1px solid rgba(255, 255, 255, 0.3);
 }
 .form-group{
     text-align: left;
+}
+.footer{
+    background-color: #497174;
+    color: white;
+    text-align: center;
+}
+.footer div a{
+    text-decoration: none;
+    color: white;
+}
+.footer div a:hover{
+    font-weight: bolder;
 }

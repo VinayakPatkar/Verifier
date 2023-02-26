@@ -49,9 +49,21 @@ margin-top: 5rem;
     padding-top: 5rem;
     
 }
-.adminDiv h1, .adminDiv form, .adminDiv label, .adminDiv input{
-    /* background-color: white; */
+.mainDiv{
+    min-height: 100vh;
 }
 .form-group{
     text-align: left;
+}
+.footer{
+    background-color: #497174;
+    color: white;
+    text-align: center;
+}
+.footer div a{
+    text-decoration: none;
+    color: white;
+}
+.footer div a:hover{
+    font-weight: bolder;
 }

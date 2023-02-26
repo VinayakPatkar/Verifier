@@ -10,7 +10,7 @@ const fileUpload = require("express-fileupload");
 const cors = require('cors')
 var favicon = require('serve-favicon');
 var path = require('path')
-app.use(favicon(path.join(__dirname, 'public', 'images/website.png')))
+app.use(favicon(path.join(__dirname, 'public', 'images/verifyDB.png')))
 app.use(fileUpload());
 app.use(express.json())
 app.use(express.urlencoded())

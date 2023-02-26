@@ -9,26 +9,37 @@
         <title>Verify Marksheet | Verifier</title>
     </head>
     <body>
-        <nav class="navbar navbar-expand-lg ">
+        <div class="mainDiv">
+
+        
+        <nav class="navbar ">
             <a class="navbar-brand" href="#">
                 <img src="images/logo.png" width="100" height="auto" alt="">
               </a>
-            <div class="collapse navbar-collapse" id="navbarText">
+            <div id="navbarText">
               <ul class="navbar-nav mr-auto">
     
               </ul>
-              <!-- <span class="navbar-text">
-                <button class="btn btn-warning navButton"> Generate Marksheet</button>
-              </span> -->
-            </div>
+                <span class="navbar-text">
+                  <button class="btn btn-warning navButton" onclick="redirectToHome()"> Home</button>
+                </span>
+              </div>
+            
           </nav>
-    <div style="display: flex;align-items: center;justify-content: center;font-size: 1rem;flex-direction: column;color: white; padding-top: 5rem;">
+        <div style="display: flex;align-items: center;justify-content: center;font-size: 1rem;flex-direction: column;color: white; padding-top: 5rem;">
 
-        <h3>Verify Marksheet</h3>
-        <label for="marksheet" style="margin-top: 10px;">Upload your Marksheet: &nbsp;</label><br>
-        <input type="file" name="marksheet" id="file"/><br>
-        <input type="submit" id="submit"  class="btn btn-warning navButton" accept="application/pdf" value="Upload" style="margin-top:10px;"/>
+            <h3>Verify Marksheet</h3>
+            <label for="marksheet" style="margin-top: 10px;">Upload your Marksheet: &nbsp;</label><br>
+            <input type="file" name="marksheet" id="file"/><br>
+            <input type="submit" id="submit"  class="btn btn-warning navButton" accept="application/pdf" value="Upload" style="margin-top:10px;"/>
         </div>
+    </div>
+    <footer id="footer" class="footer">
+        <div>
+          Made by: <a href="https://github.com/karishmarajput">Karishma </a>, Vasundhara, Pratik & Aditya.
+        </div>
+    </footer> 
+</body>
         <script>
             let file = document.getElementById('file');
             let subBtn = document.getElementById('submit');
@@ -54,11 +65,15 @@
                     }
                 })
             })
+        function redirectToHome(){
+            window.location.href = window.location.href.replace('verify?', '') 
+        }
 
+ 
         </script>
             <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
             <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    </body>
+    
     
 </html>
