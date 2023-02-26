@@ -27,9 +27,7 @@ body {
 
 }
 .navbar{
-    /* From https://css.glass */
 background: rgba(255, 255, 255, 0.2);
-
 box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
 backdrop-filter: blur(5px);
 -webkit-backdrop-filter: blur(5px);
@@ -40,10 +38,12 @@ border: 1px solid rgba(255, 255, 255, 0.3);
 }
 .navButton{
     border-radius: 50rem !important;
-    color: #1A1300 !important;
-    border: 1px solid #1A1300 !important;
-    background-color: #FFDA57 !important;
+    color: #ffffff !important;
+    border: 1px solid #183348 !important;
+    background-color: #183348 !important;
+    min-width: 7rem;
 }
+
 .mainDiv{
     width: 100%;
     min-height: 100vh;
