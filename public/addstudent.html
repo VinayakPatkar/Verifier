@@ -18,7 +18,7 @@
 
           </ul>
           <span class="navbar-text">
-            <button class="btn btn-warning navButton" onclick="verifyMarksheet()"> Verify Marksheet</button>
+            <button class="btn btn-warning navButton" onclick="homeFunc()">Home</button>
           </span>
         </div>
       </nav>
@@ -78,8 +78,8 @@
     </form>
     </div></div>
     <script>
-        function verifyMarksheet(){
-            window.location.href = window.location.href.replace("login","verify")
+        function homeFunc(){
+            window.location.href = window.location.href.replace("aMarksheet","")
         }
         function resetMarks(){
             document.getElementById("form").reset();

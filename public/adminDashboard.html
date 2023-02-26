@@ -53,16 +53,6 @@ backdrop-filter: blur(5px);
 -webkit-backdrop-filter: blur(5px);
 border: 1px solid rgba(255, 255, 255, 0.3);
 }
-.generateMain{
-  color: white;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  min-height: 100vh;
-}
-.generateMain h3{
-  padding: 2rem;
-}
     </style>
 </head>
 <body>
@@ -81,17 +71,21 @@ border: 1px solid rgba(255, 255, 255, 0.3);
             </span>
           </div>
         </nav>
-        <div class="generateMain">
-            <form action="/generate" method="post">
-              <h2>Generate marksheet using csv file!</h2>
-                <h5>make sure you have saved the file</h5>
-                <input type="submit" class="btn btn-warning navButton">
-            </form>
+        <div class="dashboardMain">
+          <form action="/aMarksheet" method="post">
+            <input type="submit" value="generate a marksheet">
+          </form>
+          <form action="/csvMarksheet" method="post">
+            <input type="submit" value="generate marksheets Using CSV">
+          </form>
+          <form action="/listall" method="post">
+            <input type="submit" value="List all Students">
+          </form>
           </div>
         </body>
       <script>
         function redirectToHome(){
-            window.location.href = window.location.href.replace('csvMarksheet', '') 
+            window.location.href = window.location.href.replace('addstudent', '') 
         }
 
       </script>

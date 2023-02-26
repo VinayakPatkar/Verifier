@@ -16,8 +16,9 @@ app.use(express.json())
 app.use(express.urlencoded())
 app.use(cors())
 app.use(express.static(__dirname + '/public'));
+app.set("views", path.join(__dirname, "/public/views"));
 
-
+app.set('view engine','ejs')
 if (typeof web3 !== 'undefined') {
     var web3 = new Web3(web3.currentProvider)
   } else {
@@ -27,7 +28,7 @@ if (typeof web3 !== 'undefined') {
 const LMS = contract(artifacts)
 LMS.setProvider(web3.currentProvider)
 
-mongodb.connect('mongodb://localhost:27017/marksheet',{ useUnifiedTopology: true }, async(err,client)=>{
+mongodb.connect('mongodb://localhost:27017/',{ useUnifiedTopology: true }, async(err,client)=>{
     if(client){
         console.log('Done')
     }
