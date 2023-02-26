@@ -49,6 +49,17 @@ function routes(app,dbe,lms,accounts){
         res.status(200).sendFile(path.join(__dirname,'public','generate.html'))
     })
     function marksheetTemp(name,Rollno,Mark1,Mark2,Mark3,Mark4,Mark5){
+        let avg = (Mark1+Mark2+Mark3+Mark4+Mark5)/5;
+        let grade = ""
+        if(avg>80){
+            grade = "A"
+        }else if(avg>60){
+            grade = "B"
+        }else if(avg>40){
+            grade = "C"
+        }else{
+            grade = "D"
+        }
         let HTMLContent = `
                 <!doctype html>
                 <html>
@@ -151,7 +162,7 @@ function routes(app,dbe,lms,accounts){
                                     <tr>
                                         <th class="border border-slate-400 text-sm">TOTAL MARKS OBTAINABLE: <span>500 </span></th>
                                         <th class="border border-slate-400 text-sm">TOTAL MARKS OBTAINED: <span>${parseInt(Mark1)+parseInt(Mark2)+parseInt(Mark3)+parseInt(Mark4)+parseInt(Mark5)}</span></th>
-                                        <th class="border border-slate-400 text-sm">GRADE: <br> <span></span></th>
+                                        <th class="border border-slate-400 text-sm">GRADE: <br> <span>${grade}</span></th>
                                     </tr>
                                     </thead>
                                 </table> 
