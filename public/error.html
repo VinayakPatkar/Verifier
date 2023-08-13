@@ -66,9 +66,9 @@ border: 1px solid rgba(255, 255, 255, 0.3);
             <ul class="navbar-nav mr-auto">
   
             </ul>
-            <!-- <span class="navbar-text">
+            <span class="navbar-text">
               <button class="btn btn-warning navButton" onclick="redirectToHome()"> Home</button>
-            </span> -->
+            </span>
           </div>
         </nav>
         <div class="card">
@@ -88,7 +88,14 @@ border: 1px solid rgba(255, 255, 255, 0.3);
   </body>
       <script>
         function redirectToHome(){
-            window.location.href = window.location.href.replace('addstudent', '') 
+          // console.log( window.location.href.replace(/\5.*/, ''));
+          console.log(window.location.href )
+          let url = window.location.href 
+          url = url.replace('reissue', '');
+            url = url.replace('addstudent', '');
+            url = url.replace('generate', '');
+            console.log(url)
+            window.location.href = url
         }
       </script>
 

@@ -208,7 +208,7 @@ function routes(app,dbe,lms,accounts){
         return message
     }
     app.post("/reissue",(req,res)=>{
-        let Rollno = parseInt(req.body.rollNo);
+        let Rollno = String(req.body.rollNo);
         console.log(Rollno)
         db.findOne({Rollno},async (err,student)=>{
             console.log(student)
