@@ -33,7 +33,7 @@ mongodb.connect('mongodb://localhost:27017/',{ useUnifiedTopology: true }, async
         console.log('Done')
     }
     await client.connect()
-    const db =client.db('Student')
+    const db =client.db('Temp')
     const accounts = await web3.eth.getAccounts();
     console.log(accounts[0])
     const lms = await LMS.deployed();
